@@ -278,24 +278,24 @@
 
     <div class="myth-card myth">
       <div class="myth-tag">Lo que crees</div>
-      <h3>"El agente ya sabe gestionar mi negocio"</h3>
-      <p>OpenClaw es <strong>generalista por diseño</strong>. No sabe nada de tu empresa, tus clientes, tus procesos ni tus herramientas. Es como contratar a alguien sin hacerle onboarding ni darle un manual.</p>
+      <h3>"Lo configuro una vez y ya gestiona mi negocio"</h3>
+      <p>OpenClaw tiene un buen onboarding inicial (BOOTSTRAP.md, donde el agente te entrevista para configurar SOUL.md y USER.md). Pero eso te da un asistente con personalidad y contexto básico — no un <strong>sistema de gestión</strong> con tareas coordinadas, memoria en capas y automatizaciones de negocio.</p>
     </div>
     <div class="myth-card reality">
       <div class="myth-tag">La realidad</div>
-      <h3>Un agente útil necesita contexto, reglas y estructura</h3>
-      <p>Para que un agente sea productivo necesita: conocer tu empresa (USER.md), tener personalidad y reglas (SOUL.md), saber qué hacer cada día (skills + cron jobs), y aprender de lo que pasa (memoria persistente).</p>
+      <h3>La identidad es solo el primer paso</h3>
+      <p>OpenClaw hace bien la identidad del agente (SOUL.md, USER.md, IDENTITY.md). Pero un agente productivo para tu negocio necesita además: skills especializados, orquestación de tareas, memoria que se consolida, comunicación entre agentes, y saber cómo construir cosas nuevas.</p>
     </div>
 
     <div class="myth-card myth">
       <div class="myth-tag">Lo que crees</div>
-      <h3>"Las tareas complejas se gestionan solas"</h3>
-      <p>OpenClaw no descompone tareas complejas en pasos. Si le pides algo que requiere 5 acciones coordinadas, lo intenta todo de golpe en un solo turno. Si falla a mitad, no se autocorrige.</p>
+      <h3>"Las tareas automáticas ya vienen listas"</h3>
+      <p>OpenClaw tiene cron jobs y un sistema de heartbeat (cada 30 min). Pero su heartbeat consume ~170k-210k tokens por turno (~$5/día solo en eso, >$150/mes antes de hacer trabajo real). Y los cron jobs tienen <strong>bugs documentados</strong> de fiabilidad en la comunidad.</p>
     </div>
     <div class="myth-card reality">
       <div class="myth-tag">La realidad</div>
-      <h3>La orquestación es lo que marca la diferencia</h3>
-      <p>Un sistema productivo necesita un orquestador que coordine tareas, gestione spawns, inyecte contexto, controle tiempos y permita que los agentes se comuniquen entre sí. Eso no viene de serie en ningún framework.</p>
+      <h3>La automatización fiable requiere ingeniería</h3>
+      <p>Nuestro orquestador ejecuta scripts Python puros (coste mínimo en tokens), con pre-scripts para inyectar datos frescos, spawn rules para crear tareas derivadas, y wall messages para que los agentes se comuniquen. Funciona 24/7 sin sorpresas en la factura.</p>
     </div>
 
     <div class="myth-card myth">
@@ -349,18 +349,23 @@
         </tr>
         <tr>
           <td>Orquestación multi-tarea</td>
-          <td><span class="cross">✗</span> No incluido<span class="comp-detail">Ejecución monolítica, sin descomposición</span></td>
-          <td><span class="check">✓</span> Orquestador completo<span class="comp-detail">Coordinación entre skills, wall messages, action items</span></td>
+          <td><span class="partial">⚠</span> Parcial<span class="comp-detail">Sub-agents (sessions_spawn) + cron jobs. Pero sin coordinación entre tareas ni wall messages</span></td>
+          <td><span class="check">✓</span> Orquestador completo<span class="comp-detail">Coordinación entre skills, wall messages, action items, spawn rules, pre-scripts Python</span></td>
         </tr>
         <tr>
           <td>Feedback proactivo</td>
-          <td><span class="cross">✗</span> Tareas silenciosas<span class="comp-detail">Sin reportes automáticos</span></td>
-          <td><span class="check">✓</span> Notificaciones + reportes<span class="comp-detail">Telegram con resúmenes, alertas, streaming en tiempo real</span></td>
+          <td><span class="partial">⚠</span> Limitado<span class="comp-detail">Cron jobs pueden anunciar a un canal al completar</span></td>
+          <td><span class="check">✓</span> Completo<span class="comp-detail">Telegram con streaming en tiempo real, herramientas visibles, reportes automáticos</span></td>
         </tr>
         <tr>
           <td>Memoria inteligente</td>
-          <td><span class="partial">⚠</span> SOUL.md<span class="comp-detail">Un solo archivo de instrucciones</span></td>
-          <td><span class="check">✓</span> Sistema completo<span class="comp-detail">MEMORY.md + notas diarias + consolidación semanal + wall messages entre agentes</span></td>
+          <td><span class="check">✓</span> Buena base<span class="comp-detail">MEMORY.md + notas diarias + Auto-Dream (consolidación nocturna)</span></td>
+          <td><span class="check">✓</span> Sistema completo<span class="comp-detail">MEMORY.md + notas diarias + consolidación semanal + wall messages entre agentes + pending actions</span></td>
+        </tr>
+        <tr>
+          <td>Modelo de coste</td>
+          <td><span class="cross">✗</span> Pago por tokens (API)<span class="comp-detail">Cada turno, cada heartbeat, cada sub-agent consume tokens. Heartbeat solo: ~$150/mes. Total real: $200-500+/mes</span></td>
+          <td><span class="check">✓</span> Suscripción fija<span class="comp-detail">Usa Claude Code CLI con suscripción (~90€/mes tarifa plana). Da igual cuántas tareas ejecutes — mismo precio siempre</span></td>
         </tr>
         <tr>
           <td>Reuniones de equipo AI</td>
@@ -573,7 +578,7 @@
     </details>
     <details class="faq-item">
       <summary>¿Cuánto cuesta mantener el sistema al mes?</summary>
-      <div class="faq-answer">Servidor: ~7€/mes (Hetzner). Suscripción de Claude: recomendamos Claude Max (~90€/mes) para uso ilimitado del agente. Total: ~97€/mes. Es menos de lo que cuesta 2 horas de un freelance.</div>
+      <div class="faq-answer">Servidor: ~7€/mes (Hetzner). Suscripción de Claude Max: ~90€/mes (tarifa plana, uso ilimitado). <strong>Total: ~97€/mes</strong>, da igual cuántas tareas ejecutes.<br><br>Comparación: con OpenClaw pagas por API (tokens consumidos). Solo el heartbeat automático cuesta ~$150/mes. Si le sumas tareas, sub-agentes y uso diario, fácilmente superas los $300-500/mes. Con nuestro sistema pagas siempre lo mismo.</div>
     </details>
     <details class="faq-item">
       <summary>¿El agente puede hacer cosas con mis cuentas (Meta Ads, Google, etc.)?</summary>
