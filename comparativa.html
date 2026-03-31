@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>¿Qué diferencia hay? — Agentes AI para negocios digitales</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+  :root {
+    --bg: #080c12;
+    --bg2: #0e1520;
+    --card: #131d2a;
+    --card2: #192535;
+    --border: #1e2d40;
+    --text: #e8edf4;
+    --text2: #9eaab8;
+    --text3: #5e6e80;
+    --blue: #4da3ff;
+    --blue-dim: rgba(77,163,255,0.10);
+    --green: #34d399;
+    --green-dim: rgba(52,211,153,0.10);
+    --orange: #fbbf24;
+    --orange-dim: rgba(251,191,36,0.10);
+    --red: #f87171;
+    --red-dim: rgba(248,113,113,0.10);
+    --purple: #a78bfa;
+    --purple-dim: rgba(167,139,250,0.10);
+    --teal: #2dd4bf;
+    --teal-dim: rgba(45,212,191,0.10);
+    --radius: 16px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+
+  /* ── Hero ── */
+  .hero {
+    position: relative; overflow: hidden;
+    background: linear-gradient(160deg, #0a1018 0%, #121e30 40%, #0e1525 100%);
+    padding: 5rem 2rem; text-align: center;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(circle at 30% 40%, rgba(77,163,255,0.05) 0%, transparent 60%),
+                radial-gradient(circle at 70% 60%, rgba(167,139,250,0.05) 0%, transparent 60%);
+  }
+  .hero-content { position: relative; z-index: 1; max-width: 800px; margin: 0 auto; }
+  .hero-badge {
+    display: inline-block; padding: 0.4rem 1.2rem; border-radius: 20px;
+    font-size: 0.78rem; font-weight: 700; letter-spacing: 0.5px;
+    background: var(--orange-dim); color: var(--orange); border: 1px solid rgba(251,191,36,0.2);
+    margin-bottom: 1.5rem; text-transform: uppercase;
+  }
+  .hero h1 { font-size: 2.8rem; font-weight: 900; letter-spacing: -1px; margin-bottom: 1rem; line-height: 1.2; }
+  .hero h1 .gradient {
+    background: linear-gradient(135deg, var(--blue), var(--purple));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  }
+  .hero p { color: var(--text2); font-size: 1.15rem; max-width: 650px; margin: 0 auto; }
+
+  /* ── Container ── */
+  .container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+
+  /* ── Section ── */
+  .section { margin: 4rem 0; }
+  .section-label {
+    text-align: center; margin-bottom: 0.8rem;
+    font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 2px; color: var(--text3);
+  }
+  .section-title {
+    text-align: center; font-size: 1.8rem; font-weight: 900;
+    margin-bottom: 0.5rem; letter-spacing: -0.5px;
+  }
+  .section-subtitle {
+    text-align: center; color: var(--text2); font-size: 1rem;
+    max-width: 600px; margin: 0 auto 2rem;
+  }
+
+  /* ── Myth cards ── */
+  .myth-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .myth-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 2rem; position: relative; overflow: hidden;
+  }
+  .myth-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  }
+  .myth-card.myth::before { background: linear-gradient(90deg, var(--red), var(--orange)); }
+  .myth-card.reality::before { background: linear-gradient(90deg, var(--green), var(--teal)); }
+  .myth-tag {
+    display: inline-block; padding: 0.2rem 0.7rem; border-radius: 6px;
+    font-size: 0.7rem; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.5px; margin-bottom: 1rem;
+  }
+  .myth .myth-tag { background: var(--red-dim); color: var(--red); }
+  .reality .myth-tag { background: var(--green-dim); color: var(--green); }
+  .myth-card h3 { font-size: 1.05rem; font-weight: 800; margin-bottom: 0.5rem; }
+  .myth-card p { color: var(--text2); font-size: 0.88rem; }
+
+  /* ── Comparison table ── */
+  .comp-table-wrap {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); overflow: hidden;
+  }
+  .comp-table { width: 100%; border-collapse: collapse; }
+  .comp-table thead th {
+    padding: 1.2rem 1rem; text-align: left;
+    font-size: 0.85rem; font-weight: 800; text-transform: uppercase;
+    letter-spacing: 0.5px; border-bottom: 2px solid var(--border);
+  }
+  .comp-table thead th:first-child { color: var(--text3); width: 35%; }
+  .comp-table thead th:nth-child(2) { color: var(--text2); background: rgba(255,255,255,0.02); }
+  .comp-table thead th:nth-child(3) { color: var(--blue); background: var(--blue-dim); }
+  .comp-table td {
+    padding: 0.8rem 1rem; border-bottom: 1px solid rgba(30,45,64,0.5);
+    font-size: 0.88rem; vertical-align: top;
+  }
+  .comp-table td:first-child { color: var(--text); font-weight: 600; }
+  .comp-table td:nth-child(2) { color: var(--text2); background: rgba(255,255,255,0.01); }
+  .comp-table td:nth-child(3) { background: rgba(77,163,255,0.03); }
+  .comp-table tr:hover td { background: rgba(255,255,255,0.02); }
+  .comp-table tr:hover td:nth-child(3) { background: rgba(77,163,255,0.06); }
+  .check { color: var(--green); font-weight: 700; }
+  .cross { color: var(--red); opacity: 0.6; }
+  .partial { color: var(--orange); }
+  .comp-detail { color: var(--text3); font-size: 0.8rem; display: block; margin-top: 0.2rem; }
+
+  /* ── Feature cards ── */
+  .feat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  .feat-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 1.5rem;
+    transition: all 0.3s;
+  }
+  .feat-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); border-color: rgba(77,163,255,0.2); }
+  .feat-icon {
+    width: 48px; height: 48px; border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem; margin-bottom: 1rem;
+  }
+  .feat-card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.4rem; }
+  .feat-card p { color: var(--text2); font-size: 0.85rem; }
+
+  /* ── Timeline ── */
+  .timeline-wrap {
+    display: grid; grid-template-columns: 1fr 60px 1fr; gap: 0; margin: 2rem 0;
+  }
+  .timeline-col { padding: 0 1rem; }
+  .timeline-center {
+    display: flex; flex-direction: column; align-items: center;
+    position: relative;
+  }
+  .timeline-center::before {
+    content: ''; position: absolute; top: 0; bottom: 0; width: 2px;
+    background: var(--border);
+  }
+  .timeline-dot {
+    width: 12px; height: 12px; border-radius: 50%;
+    position: relative; z-index: 1; margin: 1.8rem 0;
+    flex-shrink: 0;
+  }
+  .timeline-item {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1rem 1.2rem; margin-bottom: 0.8rem;
+  }
+  .timeline-item h4 { font-size: 0.85rem; font-weight: 700; margin-bottom: 0.3rem; }
+  .timeline-item p { color: var(--text3); font-size: 0.8rem; margin: 0; }
+  .timeline-item .time-badge {
+    display: inline-block; padding: 0.15rem 0.5rem; border-radius: 4px;
+    font-size: 0.7rem; font-weight: 700; margin-bottom: 0.4rem;
+  }
+  .tl-left .timeline-item { border-left: 3px solid var(--text3); }
+  .tl-left .time-badge { background: rgba(255,255,255,0.05); color: var(--text3); }
+  .tl-right .timeline-item { border-left: 3px solid var(--green); }
+  .tl-right .time-badge { background: var(--green-dim); color: var(--green); }
+  .tl-header {
+    text-align: center; padding: 0.8rem; font-size: 0.85rem; font-weight: 800;
+    border-radius: 10px; margin-bottom: 1rem;
+  }
+  .tl-left .tl-header { background: rgba(255,255,255,0.03); color: var(--text2); }
+  .tl-right .tl-header { background: var(--green-dim); color: var(--green); }
+
+  /* ── Who is this for ── */
+  .persona-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .persona-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 2rem; text-align: center;
+  }
+  .persona-emoji { font-size: 3rem; display: block; margin-bottom: 1rem; }
+  .persona-card h3 { font-size: 1.1rem; font-weight: 800; margin-bottom: 0.5rem; }
+  .persona-card p { color: var(--text2); font-size: 0.88rem; }
+  .persona-tag {
+    display: inline-block; margin-top: 0.8rem; padding: 0.3rem 1rem;
+    border-radius: 8px; font-size: 0.78rem; font-weight: 700;
+  }
+
+  /* ── FAQ ── */
+  .faq-item {
+    border: 1px solid var(--border); border-radius: 12px;
+    margin-bottom: 0.6rem; overflow: hidden;
+  }
+  .faq-item summary {
+    padding: 1rem 1.2rem; cursor: pointer;
+    font-weight: 600; font-size: 0.95rem;
+    background: var(--card); transition: background 0.2s;
+    list-style: none; display: flex; align-items: center; gap: 0.8rem;
+  }
+  .faq-item summary::before { content: '+'; color: var(--blue); font-size: 1.2rem; font-weight: 800; width: 24px; }
+  .faq-item[open] summary::before { content: '−'; }
+  .faq-item summary:hover { background: var(--card2); }
+  .faq-answer { padding: 0 1.2rem 1.2rem 3.2rem; color: var(--text2); font-size: 0.9rem; line-height: 1.7; }
+
+  /* ── CTA ── */
+  .cta-section {
+    text-align: center; padding: 4rem 2rem;
+    background: linear-gradient(135deg, var(--card) 0%, var(--card2) 100%);
+    border: 1px solid var(--border); border-radius: var(--radius);
+    margin: 3rem 0;
+  }
+  .cta-section h2 { font-size: 1.8rem; font-weight: 900; margin-bottom: 0.5rem; }
+  .cta-section p { color: var(--text2); font-size: 1rem; margin-bottom: 1.5rem; }
+  .cta-btn {
+    display: inline-block; padding: 0.8rem 2rem; border-radius: 12px;
+    font-weight: 700; font-size: 0.95rem; text-decoration: none;
+    background: linear-gradient(135deg, var(--blue), var(--purple));
+    color: white; transition: all 0.3s;
+  }
+  .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(77,163,255,0.3); }
+
+  /* ── Footer ── */
+  .footer {
+    text-align: center; padding: 2rem;
+    color: var(--text3); font-size: 0.78rem;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 800px) {
+    .myth-grid, .persona-grid { grid-template-columns: 1fr; }
+    .feat-grid { grid-template-columns: 1fr; }
+    .timeline-wrap { grid-template-columns: 1fr; }
+    .timeline-center { display: none; }
+    .hero h1 { font-size: 2rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════ HERO ═══════════ -->
+<div class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">Guía para emprendedores digitales</div>
+    <h1>Lo que ves en redes <span class="gradient">no es lo que recibes</span></h1>
+    <p>Una comparativa honesta entre instalar un agente AI genérico y tener un sistema diseñado para tu negocio digital.</p>
+  </div>
+</div>
+
+<div class="container">
+
+<!-- ═══════════ MITOS ═══════════ -->
+<div class="section">
+  <div class="section-label">Empecemos por lo básico</div>
+  <div class="section-title">Lo que las redes no te cuentan</div>
+  <div class="section-subtitle">Esos vídeos con dashboards espectaculares y agentes haciendo de todo no muestran la historia completa.</div>
+
+  <div class="myth-grid">
+    <div class="myth-card myth">
+      <div class="myth-tag">Lo que crees</div>
+      <h3>"Instalo OpenClaw y ya tengo un dashboard como el de los vídeos"</h3>
+      <p>Los dashboards avanzados que ves en redes (LobsterBoard, TenacitOS, pixel art dashboards...) son <strong>proyectos comunitarios separados</strong> que desarrolladores han construido durante semanas o meses encima de OpenClaw. No vienen incluidos.</p>
+    </div>
+    <div class="myth-card reality">
+      <div class="myth-tag">La realidad</div>
+      <h3>OpenClaw incluye un panel básico de chat y configuración</h3>
+      <p>De serie recibes: un panel web con vista de chat, configuración del agente y sesiones. Es funcional, pero no tiene oficina 3D, ni gestión de tareas visual, ni memoria navegable, ni skills con detalle.</p>
+    </div>
+
+    <div class="myth-card myth">
+      <div class="myth-tag">Lo que crees</div>
+      <h3>"El agente ya sabe gestionar mi negocio"</h3>
+      <p>OpenClaw es <strong>generalista por diseño</strong>. No sabe nada de tu empresa, tus clientes, tus procesos ni tus herramientas. Es como contratar a alguien sin hacerle onboarding ni darle un manual.</p>
+    </div>
+    <div class="myth-card reality">
+      <div class="myth-tag">La realidad</div>
+      <h3>Un agente útil necesita contexto, reglas y estructura</h3>
+      <p>Para que un agente sea productivo necesita: conocer tu empresa (USER.md), tener personalidad y reglas (SOUL.md), saber qué hacer cada día (skills + cron jobs), y aprender de lo que pasa (memoria persistente).</p>
+    </div>
+
+    <div class="myth-card myth">
+      <div class="myth-tag">Lo que crees</div>
+      <h3>"Las tareas complejas se gestionan solas"</h3>
+      <p>OpenClaw no descompone tareas complejas en pasos. Si le pides algo que requiere 5 acciones coordinadas, lo intenta todo de golpe en un solo turno. Si falla a mitad, no se autocorrige.</p>
+    </div>
+    <div class="myth-card reality">
+      <div class="myth-tag">La realidad</div>
+      <h3>La orquestación es lo que marca la diferencia</h3>
+      <p>Un sistema productivo necesita un orquestador que coordine tareas, gestione spawns, inyecte contexto, controle tiempos y permita que los agentes se comuniquen entre sí. Eso no viene de serie en ningún framework.</p>
+    </div>
+
+    <div class="myth-card myth">
+      <div class="myth-tag">Lo que crees</div>
+      <h3>"Solo necesito conectar Telegram y listo"</h3>
+      <p>Sí, OpenClaw conecta Telegram en 5 minutos. Pero un bot de Telegram que solo responde preguntas no es un sistema de gestión. Es un chatbot.</p>
+    </div>
+    <div class="myth-card reality">
+      <div class="myth-tag">La realidad</div>
+      <h3>Telegram es un canal, no el sistema</h3>
+      <p>Lo potente es que desde Telegram puedas ejecutar tareas, guardar ideas, consultar tu calendario, ver métricas, editar configuración del sistema — con streaming en tiempo real y memoria de la conversación.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ COMPARATIVA ═══════════ -->
+<div class="section">
+  <div class="section-label">Comparativa honesta</div>
+  <div class="section-title">OpenClaw base vs Sistema para negocios</div>
+  <div class="section-subtitle">OpenClaw es un excelente framework generalista. Nosotros construimos encima de esa filosofía, pero enfocado al emprendedor digital.</div>
+
+  <div class="comp-table-wrap">
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th>Funcionalidad</th>
+          <th>OpenClaw (instalación base)</th>
+          <th>Sistema KIRA Base</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Chat por Telegram</td>
+          <td><span class="check">✓</span> Incluido<span class="comp-detail">23+ canales de mensajería</span></td>
+          <td><span class="check">✓</span> Incluido<span class="comp-detail">Con streaming, herramientas visibles y memoria persistente</span></td>
+        </tr>
+        <tr>
+          <td>Dashboard web</td>
+          <td><span class="partial">⚠</span> Básico<span class="comp-detail">Chat, config, sesiones</span></td>
+          <td><span class="check">✓</span> Completo<span class="comp-detail">Oficina 3D, tareas, skills, memoria, ideas, calendario, reuniones, agentes</span></td>
+        </tr>
+        <tr>
+          <td>Cron jobs / Tareas automáticas</td>
+          <td><span class="check">✓</span> Básico<span class="comp-detail">Programar tareas simples</span></td>
+          <td><span class="check">✓</span> Avanzado<span class="comp-detail">Spawn rules, one-shot, pre-scripts, skills especializados, evaluación de spawn</span></td>
+        </tr>
+        <tr>
+          <td>Skills / Habilidades</td>
+          <td><span class="check">✓</span> 5,400+ comunitarios<span class="comp-detail">Genéricos, calidad variable</span></td>
+          <td><span class="check">✓</span> 7 especializados<span class="comp-detail">Reunión matutina, memoria diaria, consolidación, auditorías, briefing + framework para crear nuevos</span></td>
+        </tr>
+        <tr>
+          <td>Orquestación multi-tarea</td>
+          <td><span class="cross">✗</span> No incluido<span class="comp-detail">Ejecución monolítica, sin descomposición</span></td>
+          <td><span class="check">✓</span> Orquestador completo<span class="comp-detail">Coordinación entre skills, wall messages, action items</span></td>
+        </tr>
+        <tr>
+          <td>Feedback proactivo</td>
+          <td><span class="cross">✗</span> Tareas silenciosas<span class="comp-detail">Sin reportes automáticos</span></td>
+          <td><span class="check">✓</span> Notificaciones + reportes<span class="comp-detail">Telegram con resúmenes, alertas, streaming en tiempo real</span></td>
+        </tr>
+        <tr>
+          <td>Memoria inteligente</td>
+          <td><span class="partial">⚠</span> SOUL.md<span class="comp-detail">Un solo archivo de instrucciones</span></td>
+          <td><span class="check">✓</span> Sistema completo<span class="comp-detail">MEMORY.md + notas diarias + consolidación semanal + wall messages entre agentes</span></td>
+        </tr>
+        <tr>
+          <td>Reuniones de equipo AI</td>
+          <td><span class="cross">✗</span> No existe</td>
+          <td><span class="check">✓</span> Diarias<span class="comp-detail">Los agentes se reúnen, revisan estado, planifican y reportan</span></td>
+        </tr>
+        <tr>
+          <td>Oficina virtual</td>
+          <td><span class="cross">✗</span> No existe</td>
+          <td><span class="check">✓</span> 3D interactiva<span class="comp-detail">Agentes visuales en escritorios, estados en tiempo real, reuniones animadas</span></td>
+        </tr>
+        <tr>
+          <td>Seguridad para producción</td>
+          <td><span class="partial">⚠</span> Básica<span class="comp-detail">Token de autenticación</span></td>
+          <td><span class="check">✓</span> Completa<span class="comp-detail">Rate limiting, brute force protection, Docker hardening, firewall, Fail2Ban, SSL, auditorías automáticas</span></td>
+        </tr>
+        <tr>
+          <td>Onboarding automático</td>
+          <td><span class="cross">✗</span> Manual<span class="comp-detail">Configuración archivo por archivo</span></td>
+          <td><span class="check">✓</span> 1 comando<span class="comp-detail">setup.sh configura todo: Docker, onboarding, SSL, seguridad, arranque</span></td>
+        </tr>
+        <tr>
+          <td>Documentación para el agente</td>
+          <td><span class="cross">✗</span> No incluido</td>
+          <td><span class="check">✓</span> 10 guías<span class="comp-detail">El agente las consulta para saber cómo construir cosas nuevas</span></td>
+        </tr>
+        <tr>
+          <td>Deploy en producción (VPS)</td>
+          <td><span class="cross">✗</span> Requiere setup manual</td>
+          <td><span class="check">✓</span> Docker + 1 comando<span class="comp-detail">De servidor vacío a sistema operativo en 5 minutos</span></td>
+        </tr>
+        <tr>
+          <td>Canales de mensajería</td>
+          <td><span class="check">✓</span> 23+ canales<span class="comp-detail">WhatsApp, Telegram, Slack, Discord, Signal, Teams...</span></td>
+          <td><span class="partial">⚠</span> Telegram<span class="comp-detail">Enfocado a Telegram como canal principal (más canales se añaden según necesidad)</span></td>
+        </tr>
+        <tr>
+          <td>Modelos AI</td>
+          <td><span class="check">✓</span> Multi-modelo<span class="comp-detail">Claude, GPT-4o, Gemini, modelos locales (Ollama)</span></td>
+          <td><span class="partial">⚠</span> Claude<span class="comp-detail">Optimizado para Claude (Opus para chat, Sonnet para tareas). El mejor modelo para agentes autónomos</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════ ENFOQUE ═══════════ -->
+<div class="section">
+  <div class="section-label">El enfoque</div>
+  <div class="section-title">Generalista vs diseñado para tu negocio</div>
+  <div class="section-subtitle">La diferencia no es solo técnica. Es de enfoque.</div>
+
+  <div class="persona-grid">
+    <div class="persona-card">
+      <span class="persona-emoji">🔧</span>
+      <h3>OpenClaw: el framework</h3>
+      <p>Es como recibir un kit de piezas de IKEA sin manual. Tienes todas las piezas (23 canales, 5,400 skills genéricos, cron básico), pero el montaje, la personalización y la puesta en marcha dependen de ti. Necesitas conocimientos técnicos y semanas de trabajo.</p>
+      <div class="persona-tag" style="background:rgba(255,255,255,0.05);color:var(--text2);">Para desarrolladores y makers</div>
+    </div>
+    <div class="persona-card">
+      <span class="persona-emoji">🚀</span>
+      <h3>KIRA Base: el sistema</h3>
+      <p>Es como recibir el mueble ya montado, en tu casa, con todo funcionando. Dashboard operativo, agentes configurados, tareas programadas, memoria activa, seguridad integrada — y un agente que ya sabe cómo construir cosas nuevas para ti.</p>
+      <div class="persona-tag" style="background:var(--blue-dim);color:var(--blue);">Para emprendedores digitales</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ TIMELINE ═══════════ -->
+<div class="section">
+  <div class="section-label">El camino</div>
+  <div class="section-title">¿Cuánto se tarda en tener un sistema productivo?</div>
+
+  <div class="timeline-wrap">
+    <div class="timeline-col tl-left">
+      <div class="tl-header">Haciéndolo tú solo con OpenClaw</div>
+      <div class="timeline-item">
+        <div class="time-badge">Semana 1-2</div>
+        <h4>Instalación y configuración básica</h4>
+        <p>Instalar, conectar Telegram, escribir SOUL.md, probar que funciona.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="time-badge">Semana 3-4</div>
+        <h4>Primer cron job y skills</h4>
+        <p>Configurar tareas automáticas, probar skills comunitarios, descartar los que no sirven.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="time-badge">Mes 2</div>
+        <h4>Dashboard personalizado</h4>
+        <p>Elegir un dashboard comunitario, instalarlo, adaptarlo, resolver bugs de compatibilidad.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="time-badge">Mes 2-3</div>
+        <h4>Orquestación y memoria</h4>
+        <p>Construir sistema de memoria, coordinación entre tareas, spawn rules, action items...</p>
+      </div>
+      <div class="timeline-item">
+        <div class="time-badge">Mes 3-4</div>
+        <h4>Seguridad y producción</h4>
+        <p>Docker, SSL, firewall, rate limiting, deploy en VPS, testing completo.</p>
+      </div>
+    </div>
+
+    <div class="timeline-center">
+      <div class="timeline-dot" style="background:var(--text3);margin-top:3.5rem;"></div>
+      <div class="timeline-dot" style="background:var(--text3);"></div>
+      <div class="timeline-dot" style="background:var(--text3);"></div>
+      <div class="timeline-dot" style="background:var(--text3);"></div>
+      <div class="timeline-dot" style="background:var(--text3);"></div>
+    </div>
+
+    <div class="timeline-col tl-right">
+      <div class="tl-header">Con el sistema ya construido</div>
+      <div class="timeline-item">
+        <div class="time-badge">5 minutos</div>
+        <h4>Setup completo</h4>
+        <p>Un comando. Docker, onboarding, SSL, seguridad, arranque. Todo automático.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="time-badge">30 minutos</div>
+        <h4>Onboarding del agente</h4>
+        <p>Le cuentas quién eres, qué hace tu empresa, y el agente se configura solo.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="time-badge">Día 1</div>
+        <h4>Primera reunión matutina</h4>
+        <p>Los agentes se reúnen, revisan el sistema y te reportan. Ya está operativo.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="time-badge">Semana 1</div>
+        <h4>Primeras automatizaciones</h4>
+        <p>Le pides al agente lo que necesitas. Él crea los skills y los programa.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="time-badge">Semana 2+</div>
+        <h4>Escalar según necesites</h4>
+        <p>Pipelines de contenido, métricas, CRM, lo que tu negocio necesite. El agente lo construye.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ QUÉ INCLUYE ═══════════ -->
+<div class="section">
+  <div class="section-label">Incluido desde el día 1</div>
+  <div class="section-title">Lo que recibes con tu sistema</div>
+
+  <div class="feat-grid">
+    <div class="feat-card">
+      <div class="feat-icon" style="background:var(--blue-dim);color:var(--blue);">🖥️</div>
+      <h3>Dashboard completo</h3>
+      <p>Panel web con todo: tareas, historial, skills, memoria, ideas, calendario, conectores. Accesible desde cualquier dispositivo.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon" style="background:var(--purple-dim);color:var(--purple);">🏢</div>
+      <h3>Oficina virtual 3D</h3>
+      <p>Tus agentes AI representados visualmente en una oficina. Ves quién trabaja, quién descansa, reuniones en tiempo real.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon" style="background:var(--green-dim);color:var(--green);">🤝</div>
+      <h3>Reuniones matutinas</h3>
+      <p>Cada mañana tus agentes se reúnen, revisan el estado de todo, detectan problemas y planifican el día.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon" style="background:var(--orange-dim);color:var(--orange);">🧠</div>
+      <h3>Memoria inteligente</h3>
+      <p>Notas diarias + consolidación semanal + comunicación entre agentes. Tu sistema aprende y mejora cada día.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon" style="background:var(--teal-dim);color:var(--teal);">📱</div>
+      <h3>Telegram avanzado</h3>
+      <p>Conversación natural con streaming. Ves las acciones en tiempo real: qué archivo lee, qué comando ejecuta, qué edita.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon" style="background:var(--red-dim);color:var(--red);">🛡️</div>
+      <h3>Seguridad de producción</h3>
+      <p>Docker hardening, firewall, SSL, rate limiting, protección contra brute force, auditorías automáticas semanales.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon" style="background:var(--purple-dim);color:var(--purple);">⚡</div>
+      <h3>7 skills de serie</h3>
+      <p>Reunión matutina, memoria diaria, consolidación semanal, auditoría de seguridad, auditoría de skills, briefing y ejemplo documentado.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon" style="background:var(--blue-dim);color:var(--blue);">📚</div>
+      <h3>10 guías internas</h3>
+      <p>El agente tiene documentación para saber cómo crear skills, pipelines, conectar APIs, navegar webs y más. Ya sabe construir.</p>
+    </div>
+    <div class="feat-card">
+      <div class="feat-icon" style="background:var(--green-dim);color:var(--green);">🚀</div>
+      <h3>Deploy en 5 minutos</h3>
+      <p>De servidor vacío a sistema operativo con un solo comando. Docker, SSL, seguridad, onboarding — todo automático.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ FAQ ═══════════ -->
+<div class="section">
+  <div class="section-label">Dudas frecuentes</div>
+  <div class="section-title">Preguntas que siempre surgen</div>
+
+  <div style="margin-top:1.5rem;">
+    <details class="faq-item">
+      <summary>¿Necesito saber programar para usar el sistema?</summary>
+      <div class="faq-answer">No. El sistema viene configurado y listo. Para el uso diario hablas con tu agente en lenguaje natural (por Telegram o VS Code) y él hace el trabajo técnico. Para añadir nuevas funcionalidades, le pides al agente que las cree — tiene guías internas para saber cómo hacerlo.</div>
+    </details>
+    <details class="faq-item">
+      <summary>¿Entonces OpenClaw no sirve para nada?</summary>
+      <div class="faq-answer">Al contrario, OpenClaw es un proyecto excelente con una comunidad enorme. Es el mejor punto de partida si eres desarrollador y quieres construir tu propio sistema desde cero. Pero si eres emprendedor y quieres un sistema productivo sin invertir meses de desarrollo, necesitas algo ya construido encima.</div>
+    </details>
+    <details class="faq-item">
+      <summary>¿Cuánto cuesta mantener el sistema al mes?</summary>
+      <div class="faq-answer">Servidor: ~7€/mes (Hetzner). Suscripción de Claude: recomendamos Claude Max (~90€/mes) para uso ilimitado del agente. Total: ~97€/mes. Es menos de lo que cuesta 2 horas de un freelance.</div>
+    </details>
+    <details class="faq-item">
+      <summary>¿El agente puede hacer cosas con mis cuentas (Meta Ads, Google, etc.)?</summary>
+      <div class="faq-answer">Sí. Se conecta a cualquier servicio que tenga API (Google, Meta, Shopify, Mailchimp...) y también puede navegar webs directamente con un navegador automatizado. Es como tener un empleado con acceso a todas tus herramientas.</div>
+    </details>
+    <details class="faq-item">
+      <summary>¿Puedo personalizar el dashboard con secciones para mi negocio?</summary>
+      <div class="faq-answer">Sí. Le pides al agente: "quiero una sección que muestre mis métricas de Meta Ads" y él la crea. El dashboard crece con tu negocio. Puedes añadir paneles de métricas, CRM, facturación, pipeline de contenido — lo que necesites.</div>
+    </details>
+    <details class="faq-item">
+      <summary>¿Qué pasa si el agente comete un error?</summary>
+      <div class="faq-answer">Le das feedback: "esto no está bien porque X". El agente lo guarda en su memoria y no repite el error. Tiene auditorías de seguridad semanales que verifican que no haya datos expuestos ni configuraciones inseguras. Y todo queda en el historial para que puedas revisar.</div>
+    </details>
+    <details class="faq-item">
+      <summary>¿Puedo tener varios miembros de mi equipo usando el sistema?</summary>
+      <div class="faq-answer">Sí. Cualquier persona con la URL y el token accede al dashboard. Para hablar con el agente por VS Code, solo necesitan la IP del servidor. El agente gestiona las interacciones y mantiene el contexto de todos.</div>
+    </details>
+    <details class="faq-item">
+      <summary>¿Qué diferencia hay con ChatGPT, Claude.ai u otros chatbots?</summary>
+      <div class="faq-answer">Un chatbot responde preguntas. Tu agente <strong>ejecuta acciones</strong>: edita archivos, crea contenido, gestiona tareas, navega webs, consulta APIs, programa automatizaciones. Además tiene memoria persistente — recuerda todo lo que habéis hablado y hecho. Un chatbot olvida todo al cerrar la pestaña.</div>
+    </details>
+  </div>
+</div>
+
+<!-- ═══════════ CTA ═══════════ -->
+<div class="cta-section">
+  <h2>¿Listo para tener tu propio agente AI?</h2>
+  <p>De servidor vacío a sistema operativo en una sesión. Tú pones el negocio, nosotros ponemos la tecnología.</p>
+</div>
+
+<div class="footer">
+  Comparativa basada en datos reales — OpenClaw v2.x (marzo 2026) vs KIRA Base v1.x<br>
+  OpenClaw es un proyecto open-source de Peter Steinberger (ahora bajo fundación open-source). Respetamos y reconocemos su trabajo.
+</div>
+
+</div>
+</body>
+</html>
